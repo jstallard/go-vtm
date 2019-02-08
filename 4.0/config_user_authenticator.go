@@ -33,11 +33,16 @@ func (vtm VirtualTrafficManager) GetUserAuthenticator(name string) (*UserAuthent
 }
 
 func (object UserAuthenticator) Apply() (*UserAuthenticator, *vtmErrorResponse) {
-	marshalled, err := json.Marshal(object)
+	var b bytes.Buffer
+
+	enc := json.NewEncoder(b)
+	enc.SetEscapeHTML(false)
+
+	err := enc.Encode(object)
 	if err != nil {
 		panic(err)
 	}
-	data, ok := object.connector.put(string(marshalled), STANDARD_OBJ)
+	data, ok := object.connector.put(string(b.Bytes()), STANDARD_OBJ)
 	if ok != true {
 		object := new(vtmErrorResponse)
 		json.NewDecoder(data).Decode(object)
