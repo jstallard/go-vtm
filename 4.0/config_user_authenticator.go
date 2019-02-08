@@ -5,6 +5,7 @@
 package vtm
 
 import (
+	"bytes"
 	"encoding/json"
 )
 
