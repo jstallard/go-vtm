@@ -34,7 +34,7 @@ func (vtm VirtualTrafficManager) GetUserAuthenticator(name string) (*UserAuthent
 }
 
 func (object UserAuthenticator) Apply() (*UserAuthenticator, *vtmErrorResponse) {
-	var b bytes.Buffer
+	b := new(bytes.Buffer)
 
 	enc := json.NewEncoder(b)
 	enc.SetEscapeHTML(false)
